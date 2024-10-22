@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "OzonHW2";
+
+package greet;
+
+// The greeting service definition.
+service GoodItemProtoService {
+  // Sends a greeting
+  
+  // Send goods to create
+  rpc CreateGoods (GoodsDto) returns (GoodsId);
+  rpc GetGoodById (GoodsId) returns (Goods);
+  rpc UpdatePrice (UpdatePriceRequest) returns (Goods);
+  rpc FilterGoods (FilterRequest) returns (FilterReply);
+}
+
+message GoodsDto {
+  string name = 1;
+  double price = 2;
+  double weight = 3;
+  ProductType myProductType = 4;
+  google.protobuf.Timestamp creationDate = 5;
+  int32 warehouseNumber = 6;
+}
+
+message GoodsId {
+  string id = 1;
+}
+
+message Goods {
+  string id = 1;
+  string name = 2;
+  double price = 3;
+  double weight = 4;
+  ProductType myProductType = 5;
+  google.protobuf.Timestamp creationDate = 6;
+  int32 warehouseNumber = 7;
+}
+
+message UpdatePriceRequest {
+  string id = 1;
+  double newPrice = 2;
+}
+
+message FilterRequest {
+  google.protobuf.Timestamp creationDate = 1;
+  ProductType myProductType = 2;
+  int32 warehouseNumber = 3;
+  int32 pageNumber = 4;
+  int32 pageLength = 5;
+}
+
+message FilterReply {
+  repeated Goods goodsList = 1;
+}
+
+enum ProductType {
+  GENERAL = 0;
+  HOUSEHOLD_CHEMICAL = 1;
+  TECHNIQUE = 2;
+  PRODUCT = 3;
+}
